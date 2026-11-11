@@ -1,0 +1,146 @@
+# Backend AI-DLC 프로젝트별 설정 예시
+# 이 파일을 ai-dlc.yaml로 복사한 뒤 프로젝트에 맞게 수정한다.
+# 설정 키 이름은 유지하고, [변경 필요] 항목은 교체하며 [확인 필요] 항목은 실제 환경과 대조한다.
+# 작업 절차와 승인 권한은 AGENTS.md를 따른다.
+
+schema_version: 2
+
+# [변경 필요] 실제 서비스 식별자
+# 예: askteacher, myblog, shoppingmall
+# 반드시 아래 services의 키와 일치해야 한다.
+active_service: example
+
+services:
+  # [변경 필요] 위 active_service와 동일한 이름
+  # 예: active_service: myblog → services.myblog
+  example:
+
+    # GitHub 저장소
+    repositories:
+      # 공식 요구사항·API·ERD를 관리하는 저장소
+      common:
+        enabled: true
+        # [변경 필요] 예: marcel615/Ask-Teacher-specs
+        repository: example-user/example-specs
+        # [변경 필요] 해당 저장소의 기준 브랜치
+        default_branch: main
+
+      # 실제 개발할 Backend 저장소
+      backend:
+        enabled: true
+        # [변경 필요] 예: marcel615/Ask-Teacher
+        repository: example-user/example-backend
+        # [변경 필요] 실제 개발 기준 브랜치
+        default_branch: develop
+
+    # GitHub Projects
+    project:
+      # [변경 필요] Project를 소유한 사용자 또는 조직
+      owner: example-user
+
+      # [변경 필요] Project URL의 마지막 번호
+      number: 1
+
+      # [변경 필요] GitHub Projects의 GraphQL ID
+      # 예: PVT_kwHOA3_2Ds4BqsK-
+      id: REPLACE_WITH_PROJECT_ID
+
+      # [변경 필요] 실제 Project 주소
+      # 조직 Project라면 /orgs/조직명/projects/번호
+      url: https://github.com/users/example-user/projects/1
+
+      # [확인 필요] 실제 Project의 필드 이름
+      # 왼쪽 키는 유지하고 오른쪽 필드 이름을 확인한다.
+      fields:
+        status: Status
+        approval: Approval
+        proposer: Proposer
+        candidate_id: Candidate ID
+        priority: Priority
+        target_date: Target date
+
+      # [확인 필요] Status 필드의 실제 선택지 이름
+      statuses:
+        backlog: Backlog
+        ready: Ready
+        in_progress: In Progress
+        in_review: In Review
+        done: Done
+
+      # [확인 필요] 각 필드의 실제 선택지 이름
+      approval_values:
+        pending: Pending
+        approved: Approved
+      proposer_values:
+        user: User
+        ai: AI
+      priority_values:
+        high: High
+        medium: Medium
+        low: Low
+
+    # GitHub Issue 라벨
+    # [확인 필요] 실제 Backend 저장소의 라벨과 일치시킨다.
+    # 없으면 같은 이름으로 생성하거나, 기존 라벨 이름에 맞게 수정한다.
+    # 왼쪽 설정 키(decision, high 등)는 변경하지 않는다.
+    labels:
+      decision: 'needs: decision'
+      priority:
+        high: 'priority: high'
+        medium: 'priority: medium'
+        low: 'priority: low'
+
+    # 공식 요구사항
+    requirements:
+      # [확인 필요] repositories의 저장소 역할
+      # common: Specs 저장소 / backend: Backend 저장소
+      repository_role: common
+
+      # [확인 필요] 해당 저장소에서의 실제 문서 경로
+      path: docs/requirements.md
+      format: markdown
+
+    # 공식 API·DB 계약
+    contracts:
+      api:
+        # [확인 필요] 명세 저장소 역할과 파일 경로
+        repository_role: common
+        path: docs/api-spec.md
+        format: markdown
+
+      erd:
+        # [확인 필요] ERD 저장소 역할과 파일 경로
+        repository_role: common
+        path: docs/erd.md
+        format: markdown
+
+    # 브랜치·테스트 설정
+    development:
+      # [확인 필요] 프로젝트의 작업 브랜치 규칙
+      branch_pattern: 'feature/issue-번호-작업명'
+      branch_prefix: 'feature/'
+
+      # [확인 필요] 직접 구현하지 않을 보호 브랜치
+      protected_branches:
+        - main
+        - develop
+
+      # [확인 필요] 실제 Backend 빌드 도구에 맞게 설정
+      # Gradle: ./gradlew test
+      # Maven: ./mvnw test
+      test_command: './gradlew test'
+
+      # Windows PowerShell 기준
+      # Gradle: .\gradlew.bat test
+      # Maven: .\mvnw.cmd test
+      test_command_windows: '.\gradlew.bat test'
+
+# 적용 전 체크:
+# 1. [변경 필요] 항목은 반드시 실제 프로젝트 값으로 교체한다.
+# 2. [확인 필요] 항목은 실제 환경과 비교하고, 일치하면 유지하고 다르면 수정한다.
+# 3. active_service와 services의 키가 일치하는지 확인한다.
+# 4. GitHub Project의 필드·선택지와 Issue 라벨이 실제로 존재하는지 확인한다.
+#    없는 필드·라벨은 생성하거나 설정을 실제 값에 맞게 수정한다.
+# 5. 공식 명세의 저장소·브랜치·파일 경로와 접근 권한을 확인한다.
+# 6. 개발 브랜치 규칙과 테스트 명령이 프로젝트 환경에 맞는지 확인한다.
+# 7. 토큰·비밀번호·API 키 등 비밀값은 기록하지 않는다.
