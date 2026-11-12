@@ -1,14 +1,15 @@
 # Quick Prompts
 
 상세 절차와 승인 경계는 `.agents/skills/issue-driven-dev/SKILL.md`와 `AGENTS.md`를 따른다.
-아래 문구는 예시이며 같은 뜻의 자연스러운 지시도 사용할 수 있다.
+아래 문구는 예시이며 같은 뜻의 자연스러운 지시도 사용할 수 있다. 프로젝트 이름은 공통 루트의 `projects.local.yaml`에서 식별하고 대상 루트의 `ai-dlc.yaml`을 읽는다. 이름이 없거나 중복되면 사용자에게 묻는다.
 공통 명세는 `ai-dlc.yaml`의 활성 서비스 `requirements`, `contracts` 각 항목이 지정한 Specs 공식 원본을 읽기 전용으로 확인한다.
 Main은 품질 게이트를 확인하고 승인된 Issue 범위에서 진행한다.
 사용자 판단이 필요한 상황과 PR merge는 사용자에게 남긴다.
 
 ## Issue와 설계
 
-- 시작: `Issue #번호 작업 시작해.`
+- 시작: `Ask-Teacher 프로젝트 Issue #번호 작업 시작해.`
+- 다음 Issue 선정: `Ask-Teacher 프로젝트 작업 시작하자.`
 - 다음 Issue 선정: `작업 시작해. 다음 Issue를 확인해줘.`
 - 기능 후보: `이 아이디어를 GitHub Projects의 Pending 후보로 추가해줘.`
 - 기능 탐색: `기능 아이디어 제안해.`
