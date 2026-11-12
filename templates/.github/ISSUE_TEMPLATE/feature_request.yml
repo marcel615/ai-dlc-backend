@@ -155,7 +155,23 @@ body:
         - [ ] 예외 처리 적용
         - [ ] 관련 Controller / Service / Repository 테스트 및 API 통합 테스트 작성
         - [ ] ai-dlc.yaml의 활성 서비스 development.test_command 통과 및 테스트 범위·실행 결과·미검증 사항 기록
-        - [ ] API 문서 반영
+        - [ ] 공식 계약 참조와 기존 계약 대안·변경 필요성 검토 근거 기록
+        - [ ] 계약 변경 필요 시 Main 보고·관련 Issue/PR 기록 및 영향받는 작업 보류
+    validations:
+      required: true
+
+  - type: textarea
+    id: contract_review
+    attributes:
+      label: 공식 계약 변경 검토
+      description: 설정된 Specs 원본은 읽기 전용이다. 기존 계약으로 구현할 대안과 판단 근거를 적고, 변경이 필요하면 Main 보고와 별도 계약 관리 절차로 넘긴다. 이 Issue는 Specs 수정 권한을 부여하지 않는다.
+      placeholder: |
+        - 공식 원본 링크와 확인 버전:
+        - 기존 계약을 지키는 대안과 한계:
+        - 변경 필요 여부와 사유:
+        - 영향 범위와 수정안:
+        - Main 보고·사용자 결정 및 관련 PR:
+        - 보류 범위 / 별도 계약 관리 결과와 재검증 근거:
     validations:
       required: true
 

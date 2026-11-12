@@ -7,6 +7,8 @@ description: 사용자가 백로그 정제를 요청하면 승인된 GitHub Proj
 
 사용자가 백로그 정제를 지시했을 때 실행한다. `AGENTS.md`의 권한·중단 조건을 따르며, 정제 후 개발 사이클을 자동으로 시작하지 않는다.
 
+파일 수정 권한과 공식 계약 변경 대응은 `AGENTS.md`를 따른다. 이 스킬 실행이나 후보 승인은 공식 계약이나 AI-DLC 운영 파일 수정 권한을 부여하지 않는다. Skill 상태 파일은 명시된 책임·승인 범위에서만 변경한다.
+
 ## 기준과 경계
 
 - 대상은 `ai-dlc.yaml`의 활성 서비스 `project`와 `repositories.backend` 저장소다. Project의 Draft 중 사용자가 `project.fields.approval`이 `project.approval_values.approved`인 상태로 표시한 후보만 한 번에 최대 2개 검토한다. 사용자가 특정 후보를 지정하면 그 후보의 승인 상태를 확인한다. 둘 이상의 후보가 있을 때는 사용자가 지정한 순서를 따르고, 지정이 없으면 오래된 후보부터 검토하며 순서를 확인할 수 없으면 중단한다.
