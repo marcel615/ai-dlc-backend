@@ -10,7 +10,8 @@
 - **작업 내용:** AGENTS.md에 보호 파일·작업 기록 권한과 계약 변경 검토·보고·보류·재개 규칙을 정의하고 기존 세 Skill·세 Agent·README·빠른 지시문·리뷰 체크리스트·Issue/PR 템플릿에 연결했다. 예시 설정은 주석만 보강했으며 `API 문서 반영` 완료 조건을 계약 참조·검토·기록으로 전환했다.
 - **설계 및 결정:** 별도 계약 관리 도구나 인증·UI 필수 키를 추가하지 않는다. 설정된 계약 항목 전체를 같은 방식으로 읽고 미설정 위치는 확인한다. 일반 기능 구현 승인과 운영 파일 유지보수 승인, Specs 변경 권한을 구분한다. 기존 역할·품질 게이트·반복 수정 한도·사용자 직접 merge는 유지한다.
 - **검증 결과:** `git diff --check` 통과. Main이 준비한 `ai-dlc-stage9-check.py`를 bundled Python으로 실행해 예시 YAML 구문·참조와 기존 연결값 동일성, Issue YAML 구문·기존 필드 보존·ID 중복 없음, 세 Agent TOML 구문·역할명 보존, 세 Skill frontmatter를 확인했다. 실제 서비스 설정·Gradle 실행 대상을 추가하지 않았음을 확인했다.
-- **완료 상태:** 구현과 아래 문서 시나리오 검토 완료. Architect 독립 리뷰, Reporter devlog, Main의 PR 생성과 최종 head 확인은 후속 단계다. Merge는 수행하지 않았다.
+- **완료 상태:** 구현과 아래 문서 시나리오 검토 완료. PR #1(https://github.com/marcel615/ai-dlc-backend/pull/1)을 생성했고 Architect 독립 리뷰에서 필수 수정 없음으로 확인해 일반 리뷰를 등록했다. 선택 개선인 current-task의 PR·devlog 순서 문구를 기존 Skill 순서와 맞췄다. Reporter devlog 반영 후 최종 push의 head 검증은 Main이 수행한다. Merge는 수행하지 않았다.
+- **추가 확인:** 기존 운영 문서·역할·템플릿 16개 경로를 확인했다. 설치 대상 `.github` 참조는 README의 `templates/.github` 복사 절차에 대응한다. 현재 저장소 main은 PR 경유·삭제 및 non-fast-forward 금지 규칙을 사용하며 필수 승인 수는 0, Actions workflow는 0개로 확인했다. 보호 설정은 변경하지 않았다.
 - **미검증 사항:** 서비스 코드·Gradle 파일이 없어 예시 기본 테스트는 미실행·해당 없음이다. 실제 서비스 통합·Project 자동화·파일시스템 강제 차단은 검증하지 않았다. 문서 기반 절차가 실행 환경 권한을 자동 구성하지 않는다.
 
 ### 문서 시나리오 검토
