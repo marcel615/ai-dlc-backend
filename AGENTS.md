@@ -2,7 +2,17 @@
 
 ## 프로젝트 설정
 
-- 작업 시작 시 루트 `ai-dlc.yaml`의 `active_service`에 해당하는 `services` 항목을 읽는다. 저장소·Project·명세·브랜치·테스트 값은 해당 설정을 사용한다. 운영 문서의 상태·필드·라벨 이름은 역할을 나타내며 실제 값은 설정의 `project`와 `labels`에서 확인한다. 명세 URL은 해당 항목의 `repository_role`이 가리키는 저장소의 `repository`, `default_branch`, `path`로 구성한다. 설정은 연결 데이터이며 이 문서의 역할·권한·승인 조건을 변경하지 않는다. 설정이 없거나 불명확하면 추측하지 않고 중단한다.
+- 작업 시작 시 아래 프로젝트 식별 절차로 확인한 대상 프로젝트 루트의 `ai-dlc.yaml`에서 `active_service`에 해당하는 `services` 항목을 읽는다. 저장소·Project·명세·브랜치·테스트 값은 해당 설정을 사용한다. 운영 문서의 상태·필드·라벨 이름은 역할을 나타내며 실제 값은 설정의 `project`와 `labels`에서 확인한다. 명세 URL은 해당 항목의 `repository_role`이 가리키는 저장소의 `repository`, `default_branch`, `path`로 구성한다. 설정은 연결 데이터이며 이 문서의 역할·권한·승인 조건을 변경하지 않는다. 설정이 없거나 불명확하면 추측하지 않고 중단한다.
+
+## 프로젝트 식별과 경로
+
+- 이 저장소를 공통 운영 루트로 사용한다. Main은 사용자 요청의 프로젝트 이름을 이 루트의 `projects.local.yaml`에 등록된 `name` 또는 `aliases`와 비교한다. 앞뒤 공백 제거 후 대소문자를 구분하지 않는 전체 문자열로 일치시키며, 여러 프로젝트에 일치하거나 이름이 중복·미등록이면 추측하지 않고 사용자에게 묻는다. 명시적인 폴더 경로도 등록 정보와 대조한다. 등록 파일이 없거나 파싱·형식이 잘못된 경우 중단하고 사용자에게 확인한다.
+- 각 항목은 `name`, 문자열 목록 `aliases`, 절대 경로 `path`를 가진다. 항목과 별칭은 비어 있지 않아야 하며 프로젝트 간 이름과 별칭이 중복되면 안 된다. 등록 변경은 사용자가 지정한 정보만 반영하고 비밀값은 넣지 않는다. `projects.local.yaml`은 Git에 추적하지 않으며 공유 예시는 `projects.example.yaml`이다.
+- 유일하게 선택된 경로가 존재하는 디렉터리이자 Git 작업 트리의 최상위인지 확인한다. 대상 루트의 `ai-dlc.yaml`이 유효하고 `active_service`가 `services`의 항목을 가리키는지, 해당 작업에 필요한 저장소·Project·명세·브랜치·테스트 설정이 있는지 확인한다. 실제 사용할 fetch·push 원격과 각각의 URL을 확인하고, push URL이 별도로 설정됐다면 그것도 확인해 모두 설정의 `repositories.backend.repository`와 대조한다. 원격 선택이나 URL이 모호하거나 저장소가 일치하지 않거나 확인할 수 없으면 중단하고 사용자에게 묻는다. 임의의 폴더 탐색이나 경로 추측으로 대체하지 않는다.
+- 공통 운영 루트의 `AGENTS.md`, 스킬, 에이전트 정의, 빠른 지시문, 리뷰 기준, 템플릿을 사용한다. 프로젝트 설정, `docs/current-task.md`, `docs/current-work-log.md`, `docs/devlog/`, 소스, 테스트 및 Git 작업은 대상 프로젝트 루트에서 처리한다. 다른 작업 디렉터리나 worktree를 쓰기 전에 대상과 경로를 명시적으로 확인한다.
+- 대상 프로젝트의 기존 `AGENTS.md` 등 적용되는 로컬 지시도 확인한다. 공통 운영 규칙과 충돌하거나 적용 기준이 불명확하면 어느 쪽도 임의로 무시하거나 덮어쓰지 않고 중단해 사용자에게 보고한다.
+- Issue·PR 작성 시 대상 저장소의 `.github` 템플릿을 우선 읽는다. 없으면 공통 `templates/.github`를 참고하고 대상에 자동 복사하거나 기존 파일을 덮어쓰지 않는다. 대상 기록이 없으면 기존 기록과 충돌 여부를 확인한 뒤 공통 기록 템플릿을 참고한다.
+- Main은 모든 하위 에이전트 호출에 공통 운영 루트, 대상 프로젝트 루트, 대상 설정 파일의 절대 경로와 역할·승인 범위·금지 작업을 전달한다. 각 에이전트는 이 경로를 확인하고 불일치하면 중단한다. 사용자 승인·품질 게이트와 실행 환경 권한은 그대로 유지한다.
 
 ## 핵심 규칙
 
@@ -50,13 +60,13 @@
 
 - 상세 워크플로우: `.agents/skills/issue-driven-dev/SKILL.md`
 - 빠른 지시문: `docs/prompts/quick.md`
-- Issue 템플릿: `.github/ISSUE_TEMPLATE/feature_request.yml`
+- Issue 템플릿: 대상 `.github/ISSUE_TEMPLATE/feature_request.yml` 우선, 없으면 공통 `templates/.github/ISSUE_TEMPLATE/feature_request.yml` 참고
 - 공통 명세 공식 원본: 설정의 `requirements`, `contracts` 각 항목과 각각의 `repository_role`을 따른다. Backend에는 원문을 복사하지 않고 작업별 요약과 원본 링크만 둔다.
 - 리뷰 기준: `docs/review-checklist.md`
 - 임시 작업 기록: `docs/current-work-log.md`
 - 기능 후보와 승인: 설정된 GitHub Project의 Draft Issue
 - 영구 작업 기록: `docs/devlog/YYYY-MM.md`
-- PR 템플릿: `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md`
+- PR 템플릿: 대상 `.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` 우선, 없으면 공통 `templates/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md` 참고
 
 ## 테스트와 기록
 
