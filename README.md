@@ -69,7 +69,7 @@ ai-dlc-backend/
 
 세부 규칙과 예외·중단 조건은 `AGENTS.md` 및 각 Skill을 따른다.
 
-활성 서비스의 `work_tracking.provider`를 생략하면 기존 `github_projects` 경로를 사용한다. `jira`를 명시하면 [Jira 작업 추적 절차](docs/jira-workflow.md)에 따라 백엔드 후보를 등록하고 사용자가 승인한 같은 Task를 정제·개발한다. 별도 Task나 Epic은 만들지 않는다. 착수 가능 전환과 PR 머지는 사용자가 직접 한다. Jira 실패 시 GitHub Projects로 대체하지 않는다.
+활성 서비스의 `work_tracking.provider`를 생략하면 기존 `github_projects` 경로를 사용한다. `jira`를 명시하면 [Jira 작업 추적 절차](docs/jira-workflow.md)에 따라 백엔드 단독 후보를 등록하고 사용자가 승인한 같은 Task를 정제·개발한다. 공통 후보와 담당 영역이 불명확한 후보는 변경하지 않고 보류하며, 공통 후보와 Epic 관리는 Orchestrator가 담당한다. 착수 가능 전환과 PR 머지는 사용자가 직접 한다. Jira 실패 시 GitHub Projects로 대체하지 않는다.
 
 ## 운영 원칙
 
