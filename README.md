@@ -11,7 +11,7 @@ GitHub Issue를 중심으로 AI 에이전트가 설계·구현·리뷰·기록�
 - **Issue 기반 개발:** Issue 분석부터 설계, 구현, 리뷰, PR까지 단계별 진행
 - **역할 분리:** Architect(설계·리뷰), Builder(구현·테스트), Reporter(기록)
 - **품질 게이트:** 승인 범위, 테스트, 리뷰, CI 상태 확인
-- **GitHub Projects 연동:** 작업 선정, 우선순위, 사용자 결정 및 진행 상태 관리
+- **작업 추적:** 기본 GitHub Projects 또는 설정된 Jira에서 작업 선정과 진행 상태 관리
 - **공식 명세 참조:** 요구사항·API·ERD의 원본을 프로젝트 설정에 따라 조회
 - **개발 기록:** 작업 설계, 진행 로그 및 월별 devlog 관리
 - **사용자 승인:** 중요한 결정과 PR Merge는 사용자가 직접 수행
@@ -68,6 +68,8 @@ ai-dlc-backend/
 7. **Merge:** 사용자가 직접 PR을 병합하고 이후 브랜치 정리
 
 세부 규칙과 예외·중단 조건은 `AGENTS.md` 및 각 Skill을 따른다.
+
+활성 서비스의 `work_tracking.provider`를 생략하면 기존 `github_projects` 경로를 사용한다. `jira`를 명시하면 [Jira 작업 추적 절차](docs/jira-workflow.md)에 따라 백엔드 Task만 처리한다. 후보·정제·Epic 관리는 Orchestrator가 담당하며, 착수 가능 전환과 PR 머지는 사용자가 직접 한다. Jira 실패 시 GitHub Projects로 대체하지 않는다.
 
 ## 운영 원칙
 
