@@ -36,6 +36,33 @@ services:
         # [변경 필요] 실제 개발 기준 브랜치
         default_branch: develop
 
+    # 생략 시 github_projects. jira 실패 시 다른 도구로 대체하지 않는다.
+    work_tracking:
+      provider: github_projects
+
+    # Jira 사용 시 provider를 jira로 변경하고 실제 값 확인 후 주석 해제한다.
+    # project와 jira는 독립적이며 기존 project를 지울 필요는 없다.
+    # jira:
+    #   site_url: https://example.atlassian.net
+    #   project_key: EXAMPLE
+    #   issue_types:
+    #     candidate: Task
+    #     implementation: Task
+    #     epic: Epic
+    #     contract: Task
+    #   statuses:
+    #     candidate: 아이디어 후보
+    #     backlog: 할 일
+    #     ready: 착수 가능
+    #     in_progress: 진행 중
+    #     in_review: 검토 중
+    #     done: 완료
+    #   role_labels:
+    #     backend: area:backend
+    #     frontend: area:frontend
+    #   approval: user_transition_to_backlog
+    #   priority_order: [Highest, High, Medium, Low, Lowest]
+
     # GitHub Projects
     project:
       # [변경 필요] Project를 소유한 사용자 또는 조직
@@ -150,8 +177,8 @@ services:
 # 1. [변경 필요] 항목은 반드시 실제 프로젝트 값으로 교체한다.
 # 2. [확인 필요] 항목은 실제 환경과 비교하고, 일치하면 유지하고 다르면 수정한다.
 # 3. active_service와 services의 키가 일치하는지 확인한다.
-# 4. GitHub Project의 필드·선택지와 Issue 라벨이 실제로 존재하는지 확인한다.
-#    없는 필드·라벨은 생성하거나 설정을 실제 값에 맞게 수정한다.
+# 4. github_projects에서는 Project 필드·선택지와 Issue 라벨을 확인한다.
+#    jira에서는 Jira 프로젝트·구현 유형·상태·백엔드 역할 라벨과 우선순위를 확인한다.
 # 5. 공식 명세의 저장소·브랜치·파일 경로와 접근 권한을 확인한다.
 # 6. 개발 브랜치 규칙과 테스트 명령이 프로젝트 환경에 맞는지 확인한다.
 # 7. 토큰·비밀번호·API 키 등 비밀값은 기록하지 않는다.
