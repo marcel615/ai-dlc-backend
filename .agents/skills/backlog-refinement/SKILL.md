@@ -1,13 +1,13 @@
 ---
 name: backlog-refinement
-description: 사용자가 백로그 정제를 요청하면 승인된 GitHub Projects 기능 후보를 검토해 정식 Issue로 구체화한다.
+description: 사용자가 백로그 정제를 요청하면 선택된 작업 추적 경로의 승인된 후보를 구체화한다.
 ---
 
 # 백로그 정제
 
 사용자가 백로그 정제를 지시했을 때 실행한다. `AGENTS.md`의 권한·중단 조건을 따르며, 정제 후 개발 사이클을 자동으로 시작하지 않는다.
 
-활성 서비스의 `work_tracking.provider`가 `jira`이면 이 GitHub Projects 절차를 실행하지 않고 후보 등록·정제를 Orchestrator에 맡긴다. 생략 또는 `github_projects`에서는 기존 절차를 유지하며, 알 수 없는 값은 중단한다.
+`jira`에서는 `docs/jira-workflow.md`의 후보 정제 절차를 따른다. 사용자가 설정된 백로그 상태로 직접 옮긴 승인 이력을 확인하고 같은 키의 Task에 백엔드 라벨·구현 범위·완료 조건을 추가한다. 별도 Task나 Epic 생성 및 착수 가능 전환은 하지 않는다. 아래 Project 전용 절차는 적용하지 않는다. 생략 또는 `github_projects`에서는 기존 절차를 유지하며, 알 수 없는 값은 중단한다.
 
 파일 수정 권한과 공식 계약 변경 대응은 `AGENTS.md`를 따른다. 이 스킬 실행이나 후보 승인은 공식 계약이나 AI-DLC 운영 파일 수정 권한을 부여하지 않는다. Skill 상태 파일은 명시된 책임·승인 범위에서만 변경한다.
 

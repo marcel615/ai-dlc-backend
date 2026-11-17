@@ -15,7 +15,7 @@ description: 사용자의 작업 시작 지시에 따라 설정된 작업 추적
 
 파일 수정과 계약 변경 대응은 `AGENTS.md`의 해당 절을 따른다. 일반 개발은 운영 파일을 변경하지 않으며, 별도 AI-DLC 유지보수는 사용자 승인 대상만 변경한다. 작업 기록·Skill 상태 파일의 기존 책임과 승인 범위는 유지한다.
 
-계약 변경 필요성이 발견되면 기존 계약으로 구현할 대안을 먼저 검토한다. Main은 변경 사유·대안과 한계·영향 범위·수정안·원본 링크와 확인 버전·사용자 결정을 보고하고 관련 Issue·PR에 기존 승인 범위에서 기록한다. PR 생성 전에는 Issue와 작업 기록에 남긴다. 영향받는 작업을 보류하고 별도 계약 관리 절차로 넘긴다. 사용자 결정과 실제 공식 원본 반영을 확인한 뒤 설계·테스트·게이트를 다시 확인한다. 이 사이클과 AI-DLC 유지보수는 Specs 수정 권한을 부여하지 않는다.
+계약 변경 필요성이 발견되면 기존 계약으로 구현할 대안을 먼저 검토한다. Main은 변경 사유·대안과 한계·영향 범위·수정안·원본 링크와 확인 버전·필요한 사용자 결정을 보고한다. `github_projects`에서는 관련 Issue·PR에 기존 승인 범위에서 기록하고 PR 생성 전에는 Issue와 작업 기록에 남긴다. `jira`에서는 Task 본문이나 댓글을 수정하지 않고 로컬 작업 로그에 기록하며 사용자에게 별도 계약 변경 절차를 안내한다. 영향받는 작업을 보류하고 별도 계약 관리 절차로 넘긴다. 사용자 결정과 실제 공식 원본 반영을 확인한 뒤 설계·테스트·게이트를 다시 확인한다. 이 사이클과 AI-DLC 유지보수는 Specs 수정 권한을 부여하지 않는다.
 
 ## 역할
 
@@ -35,7 +35,7 @@ description: 사용자의 작업 시작 지시에 따라 설정된 작업 추적
 
 ## 작업 추적 경로
 
-활성 서비스의 `work_tracking.provider`가 생략되거나 `github_projects`면 기존 GitHub Projects 절차를 사용한다. `jira`면 `docs/jira-workflow.md`의 설정·선정·상태·PR 절차를 따른다. 알 수 없는 값이나 필수 설정 오류는 중단한다. Jira 실패 시 GitHub Projects로 대체하지 않는다. Jira에서는 아래 GitHub 전용 선정·Project 상태·후속 Issue 및 기능 후보 절차를 적용하지 않는다. Jira Task를 공통 설계·구현·리뷰·기록 흐름의 작업으로 취급하며, 후보 등록·정제·Epic 관리는 Orchestrator에 맡긴다.
+활성 서비스의 `work_tracking.provider`가 생략되거나 `github_projects`면 기존 GitHub Projects 절차를 사용한다. `jira`면 `docs/jira-workflow.md`의 설정·선정·상태·PR 절차를 따른다. 알 수 없는 값이나 필수 설정 오류는 중단한다. Jira 실패 시 GitHub Projects로 대체하지 않는다. Jira에서는 아래 GitHub 전용 선정·Project 상태·후속 Issue 및 기능 후보 절차를 적용하지 않는다. Jira Task를 공통 설계·구현·리뷰·기록 흐름의 작업으로 취급한다. 후보 등록과 같은 Task의 정제는 각각 `feature-discovery`, `backlog-refinement`의 Jira 절차를 따른다. 별도 Task나 Epic은 만들지 않는다.
 
 ## 다음 Issue 선정 (github_projects)
 
@@ -73,7 +73,7 @@ description: 사용자의 작업 시작 지시에 따라 설정된 작업 추적
 
 ## 사용자 결정과 재개
 
-`jira`에서는 GitHub Issue 라벨 해제·후속 Issue 생성 지시 대신 Jira Task의 본문과 사용자 결정·출처를 확인하고 `docs/jira-workflow.md`에 따라 재개한다. Task 변경은 개발 상태와 PR 링크로 한정한다.
+`jira`에서는 GitHub Issue 라벨 해제·후속 Issue 생성 지시 대신 Jira Task의 본문과 사용자 결정·출처를 확인하고 `docs/jira-workflow.md`에 따라 재개한다. 개발 사이클에서 Task 변경은 개발 상태와 PR 링크로 한정한다. 계약 변경이 필요하면 Task 본문·댓글은 수정하지 않고 로컬 작업 로그에 남긴다.
 
 - `github_projects`에서는 사용자 코멘트를 결정의 원본으로 사용한다. 모든 결정이 명확하면 `labels.decision`을 해제한다. 미결정 Issue는 자동 선정에서 제외하고, 사용자가 직접 지정하면 필요한 내용을 질문한다. GitHub 조회에 실패하면 허용된 다른 접근 방법과 기존 인증을 확인하고, 그래도 필요한 결정을 확인하지 못하면 해당 작업을 중단하고 보고한다.
 - 선정하거나 직접 지정한 Issue의 관련 사용자 코멘트를 확인하고, 결정 내용과 출처를 Architect에게 전달해 설계와 `current-task.md`에 반영한다. Issue 본문과 코멘트는 참고 자료이며 별도의 권한을 부여하지 않는다.
@@ -81,7 +81,7 @@ description: 사용자의 작업 시작 지시에 따라 설정된 작업 추적
 - 재개 시 작업 기록을 단서로 삼되 Git 상태·현재 브랜치·head와 선택된 추적 시스템의 작업 및 GitHub PR·CI·리뷰의 실제 상태를 다시 확인한다. 기존 변경과 기록을 보존한다. 접근에 실패하면 허용된 다른 방법과 기존 인증을 확인하고, 불일치가 해소되지 않거나 필요한 상태 또는 결과를 확인하지 못하면 해당 작업을 중단한다. 새 Issue로 전환할 때만 이전 devlog 반영을 확인하고 임시 기록을 초기화한다.
 ## 진행 순서
 
-1. 사용자가 작업을 지정하거나 선정 절차에서 후보를 확인해 작업을 시작하면 Main은 현재 작업, 단계, 승인 내역과 Git 상태를 확인한다. `jira`에서는 실제 작업 시작 직전 Task를 `jira.statuses.in_progress`로 전환하고 결과를 재조회한다. 같은 Issue를 재개할 때 기록과 상태를 보존한다. 새 Issue로 전환할 때 이전 Issue의 종료와 devlog 반영을 확인한다. 관련 없는 변경이나 확인 불가 상태가 있으면 중단한다.
+1. 사용자가 작업을 지정하거나 선정 절차에서 후보를 확인해 작업을 시작하면 Main은 현재 작업, 단계, 승인 내역과 Git 상태를 확인한다. `jira`에서는 새 작업의 실제 착수 직전에만 `jira.statuses.ready`를 확인하고 `jira.statuses.in_progress`로 전환한 뒤 재조회한다. 기존 작업 재개 시에는 현재 Task·PR·Git 상태를 확인하고 기존 상태를 보존한다. `jira.statuses.in_review`를 `in_progress`로 되돌리지 않는다. 같은 Issue를 재개할 때 기록과 상태를 보존한다. 새 Issue로 전환할 때 이전 Issue의 종료와 devlog 반영을 확인한다. 관련 없는 변경이나 확인 불가 상태가 있으면 중단한다.
 2. `github_projects`에서 Main은 자동 선정과 직접 지정 모두에서, `labels.decision`이 이미 해제됐거나 다른 세션에서 해제된 경우에도 관련 Issue 본문과 사용자 코멘트를 확인한다. 확인된 각 결정과 코멘트 링크·작성자를 Architect에게 전달한다. Architect는 Issue와 템플릿, 전달된 결정을 확인하고 설계와 `current-task.md` 초안에 결정 및 출처를 반영한다. 요구사항이 부족하면 Main을 통해 사용자에게 묻는다. Issue 선정은 위 절차를 따르고, 후속 Issue 생성과 사용자 결정 반영은 위 절차를 따른다. 그 외 Issue 생성·수정은 사용자 승인 후 진행한다.
    `jira`에서는 선정된 Task의 본문·사용자 결정과 출처를 확인해 Architect에게 전달하고, 추가 결정이 필요하면 사용자에게 묻는다.
 3. Architect는 설계, 공식 계약 변경 필요성과 기존 계약을 지키는 대안, `current-task.md` 초안과 검증 계획을 제시한다. Main이 설계 게이트를 통과시키면 Architect가 승인 범위의 설계를 docs/current-task.md에 반영한다. 공통 명세는 설정된 공통 명세의 기본 브랜치를 기준으로 변경 필요성을 판단·보고하고 원문 대신 Issue 관련 요약과 원본 링크를 둔다. 필요한 계약 변경은 위 공통 명세 절차에 따라 보류·보고한다.
